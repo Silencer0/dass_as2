@@ -13,7 +13,7 @@ class Inventory:
     def get_status(self):
         return {
             "cash": self.cash,
-            "cars": self.cars,
+            "cars": self.cars[:],
             "parts": self.parts_count,
             "tools": self.tools_count
         }
