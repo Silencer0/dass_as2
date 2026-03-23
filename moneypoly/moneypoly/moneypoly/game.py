@@ -271,6 +271,12 @@ class Game:
                 print(f"  {player.name} used a Get Out of Jail Free card!")
                 roll = self.dice.roll()
                 print(f"  {player.name} rolled: {self.dice.describe()}")
+                
+                if self.dice.doubles_streak >= 3:
+                    print(f"  {player.name} rolled doubles three times in a row — back to jail!")
+                    player.go_to_jail()
+                    return
+
                 self._move_and_resolve(player, roll)
                 return
 
@@ -283,6 +289,12 @@ class Game:
             print(f"  {player.name} paid the ${JAIL_FINE} fine and is released.")
             roll = self.dice.roll()
             print(f"  {player.name} rolled: {self.dice.describe()}")
+
+            if self.dice.doubles_streak >= 3:
+                print(f"  {player.name} reached 3 consecutive doubles — back to jail!")
+                player.go_to_jail()
+                return
+
             self._move_and_resolve(player, roll)
             return
 
@@ -292,6 +304,12 @@ class Game:
             player.in_jail = False
             player.jail_turns = 0
             print(f"  {player.name} rolled {self.dice.describe()} (DOUBLES) and is free!")
+            
+            if self.dice.doubles_streak >= 3:
+                print(f"  {player.name} reached 3 consecutive doubles — back to jail!")
+                player.go_to_jail()
+                return
+
             self._move_and_resolve(player, roll)
             return
 
@@ -308,6 +326,12 @@ class Game:
             player.jail_turns = 0
             roll = self.dice.roll()
             print(f"  {player.name} rolled: {self.dice.describe()}")
+
+            if self.dice.doubles_streak >= 3:
+                print(f"  {player.name} reached 3 consecutive doubles — back to jail!")
+                player.go_to_jail()
+                return
+
             self._move_and_resolve(player, roll)
 
     def _apply_card(self, player, card):
