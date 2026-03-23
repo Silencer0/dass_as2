@@ -50,6 +50,8 @@ class Game:
             f"Turn {self.state['turn_number'] + 1}  |  {player.name}  |  ${player.balance}"
         )
 
+        self.interactive_menu(player)
+
         if player.in_jail:
             self._handle_jail_turn(player)
             self.advance_turn()
