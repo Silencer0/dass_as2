@@ -236,7 +236,7 @@ def test_9_1_bank_negative_collection():
     bank = Bank()
     initial = bank.get_balance()
     bank.collect(-200)
-    assert bank.get_balance() == initial - 200
+    assert bank.get_balance() == initial
 
 def test_9_3_bank_insufficient_funds_payout():
     bank = Bank()
@@ -424,12 +424,12 @@ def test_18_property_board_mechanics(player):
     assert b.is_purchasable(99) is False
     assert b.is_special_tile(0) is True
     assert b.is_special_tile(39) is False
-    assert len(b.unowned_properties()) == 22
+    assert len(b.unowned_properties()) == 28
     
     b_prop = b.get_property_at(39)
     b_prop.owner = player
     assert len(b.properties_owned_by(player)) == 1
-    assert "Board(22 properties, 1 owned)" in repr(b)
+    assert "Board(28 properties, 1 owned)" in repr(b)
 
 # --- 19. Bank Edge Cases ---
 

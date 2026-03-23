@@ -286,9 +286,19 @@ class Game:
             self._move_and_resolve(player, roll)
             return
 
-        # No action
+        # Attempt to roll doubles to leave jail for free
+        roll = self.dice.roll()
+        if self.dice.is_doubles():
+            player.in_jail = False
+            player.jail_turns = 0
+            print(f"  {player.name} rolled {self.dice.describe()} (DOUBLES) and is free!")
+            self._move_and_resolve(player, roll)
+            return
+
+        # No action or failed doubles
         # Serve the turn
         player.jail_turns += 1
+        print(f"  {player.name} rolled {self.dice.describe()}. No doubles.")
         if player.jail_turns >= 3:
             # Mandatory release after 3 turns
             print(f"  {player.name} must leave jail. Paying mandatory ${JAIL_FINE} fine.")
