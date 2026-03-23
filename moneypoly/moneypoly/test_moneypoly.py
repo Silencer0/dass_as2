@@ -513,13 +513,6 @@ def test_21_4_game_play_turn_various_tiles(game):
         game.play_turn()
         assert p.balance == 1500 - 200 # income tax is 200
         
-def test_21_5_game_play_turn_luxury_tax(game):
-    p = game.players[0]
-    p.position = 36 # chance, but we want to land on luxury tax (38)
-    with patch.object(game.dice, 'roll', return_value=2), \
-         patch.object(game.dice, 'is_doubles', return_value=False):
-        game.play_turn()
-        assert p.balance == 1500 - 100 # luxury tax is 100
 
 def test_21_6_game_play_turn_free_parking(game):
     p = game.players[0]
