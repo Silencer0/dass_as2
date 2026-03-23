@@ -72,12 +72,14 @@ class Player:
         Awards the Go salary if the player passes or lands on Go.
         Returns the new board position.
         """
-        self.position = (self.position + steps) % BOARD_SIZE
-
-        if self.position == 0:
+        if (self.position + steps) >= BOARD_SIZE:
             self.add_money(GO_SALARY)
-            print(f"  {self.name} landed on Go and collected ${GO_SALARY}.")
+            if (self.position + steps) % BOARD_SIZE == 0:
+                print(f"  {self.name} landed on Go and collected ${GO_SALARY}.")
+            else:
+                print(f"  {self.name} passed Go and collected ${GO_SALARY}.")
 
+        self.position = (self.position + steps) % BOARD_SIZE
         return self.position
 
     def go_to_jail(self):
