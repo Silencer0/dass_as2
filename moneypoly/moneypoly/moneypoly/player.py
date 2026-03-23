@@ -1,5 +1,6 @@
-import sys
-from moneypoly.config import STARTING_BALANCE, BOARD_SIZE, GO_SALARY, JAIL_POSITION
+"""Module containing the Player class for the MoneyPoly game."""
+
+from .config import STARTING_BALANCE, BOARD_SIZE, GO_SALARY, JAIL_POSITION
 
 
 class Player:
@@ -10,10 +11,39 @@ class Player:
         self.balance = balance
         self.position = 0
         self.properties = []
-        self.in_jail = False
-        self.jail_turns = 0
-        self.get_out_of_jail_cards = 0
+        self._jail_info = {
+            'in_jail': False,
+            'turns': 0,
+            'cards': 0
+        }
         self.is_eliminated = False
+
+    @property
+    def in_jail(self):
+        """Return True if the player is in jail."""
+        return self._jail_info['in_jail']
+
+    @in_jail.setter
+    def in_jail(self, value):
+        self._jail_info['in_jail'] = value
+
+    @property
+    def jail_turns(self):
+        """Return the number of turns spent in jail."""
+        return self._jail_info['turns']
+
+    @jail_turns.setter
+    def jail_turns(self, value):
+        self._jail_info['turns'] = value
+
+    @property
+    def get_out_of_jail_cards(self):
+        """Return the number of Get Out of Jail Free cards held."""
+        return self._jail_info['cards']
+
+    @get_out_of_jail_cards.setter
+    def get_out_of_jail_cards(self, value):
+        self._jail_info['cards'] = value
 
 
     def add_money(self, amount):
@@ -42,7 +72,6 @@ class Player:
         Awards the Go salary if the player passes or lands on Go.
         Returns the new board position.
         """
-        old_position = self.position
         self.position = (self.position + steps) % BOARD_SIZE
 
         if self.position == 0:
@@ -54,8 +83,8 @@ class Player:
     def go_to_jail(self):
         """Send this player directly to the Jail square."""
         self.position = JAIL_POSITION
-        self.in_jail = True
-        self.jail_turns = 0
+        self._jail_info['in_jail'] = True
+        self._jail_info['turns'] = 0
 
 
     def add_property(self, prop):
@@ -75,7 +104,7 @@ class Player:
 
     def status_line(self):
         """Return a concise one-line status string for this player."""
-        jail_tag = " [JAILED]" if self.in_jail else ""
+        jail_tag = " [JAILED]" if self._jail_info['in_jail'] else ""
         return (
             f"{self.name}: ${self.balance}  "
             f"pos={self.position}  "
