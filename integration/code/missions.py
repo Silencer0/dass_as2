@@ -4,11 +4,17 @@ class MissionPlanning:
         self.log = []
 
     def start_mission(self, name, mission_type):
-        role = self.crew.registration.get_role(name)
-        # Strict role rules
-        allowed = (mission_type == "delivery" and role == "Driver") or \
-                  (mission_type == "repair" and role == "Mechanic") or \
-                  (mission_type == "rescue" and role == "Strategist")
+        raw_role = self.crew.registration.get_role(name)
+        if not raw_role: return False
+        
+        role = raw_role.lower()
+        m_type = mission_type.lower()
+        
+        # Strict role rules (case-insensitive)
+        allowed = (m_type == "delivery" and role == "driver") or \
+                  (m_type == "repair" and role == "mechanic") or \
+                  (m_type == "rescue" and role == "strategist")
+        
         if allowed:
             self.log.append({"driver": name, "mission": mission_type})
             return True
