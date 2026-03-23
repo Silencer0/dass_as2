@@ -210,9 +210,12 @@ class Game:
             return False
 
         buyer.deduct_money(cash_amount)
+        seller.add_money(cash_amount)  # Fix: Actually credit the seller
         prop.owner = buyer
         seller.remove_property(prop)
         buyer.add_property(prop)
+        print(f"  Trade success: {seller.name} traded {prop.name} to {buyer.name} for ${cash_amount}.")
+        return True
         print(
             f"  Trade complete: {seller.name} sold {prop.name} "
             f"to {buyer.name} for ${cash_amount}."
