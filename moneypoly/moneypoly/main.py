@@ -1,7 +1,10 @@
+"""Main entry point for the MoneyPoly game."""
+
 from moneypoly.game import Game
 
 
 def get_player_names():
+    """Prompt the user for a comma-separated list of player names and return them as a list."""
     print("Enter player names separated by commas (minimum 2 players):")
     raw = input("> ").strip()
     names = [n.strip() for n in raw.split(",") if n.strip()]
@@ -9,6 +12,7 @@ def get_player_names():
 
 
 def main():
+    """Set up and run the MoneyPoly game."""
     names = get_player_names()
     try:
         game = Game(names)
