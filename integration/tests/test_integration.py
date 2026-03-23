@@ -125,6 +125,7 @@ def test_leaderboard_updates_after_race(setup_system):
 # 14. Garage Repair Resource Consumption (Tools)
 def test_garage_consumes_tools(setup_system):
     _, inv, _, _, _, gar, _ = setup_system
+    inv.add_car("Charger")
     inv.edit_tools(10)
     gar.record_repair("Charger", 5, 0, 0)
     assert inv.get_status()["tools"] == 5
@@ -132,6 +133,7 @@ def test_garage_consumes_tools(setup_system):
 # 15. Garage Repair Resource Consumption (Parts)
 def test_garage_consumes_parts(setup_system):
     _, inv, _, _, _, gar, _ = setup_system
+    inv.add_car("Charger")
     inv.edit_parts(10)
     gar.record_repair("Charger", 0, 3, 0)
     assert inv.get_status()["parts"] == 7
@@ -139,6 +141,7 @@ def test_garage_consumes_parts(setup_system):
 # 16. Garage Repair Resource Consumption (Cash)
 def test_garage_consumes_cash(setup_system):
     _, inv, _, _, _, gar, _ = setup_system
+    inv.add_car("Charger")
     inv.edit_cash(1000)
     gar.record_repair("Charger", 0, 0, 200)
     assert inv.get_status()["cash"] == 800
@@ -146,6 +149,7 @@ def test_garage_consumes_cash(setup_system):
 # 17. Garage Repair Insufficient Resources (Fail)
 def test_garage_insufficient_resources(setup_system):
     _, inv, _, _, _, gar, _ = setup_system
+    inv.add_car("Charger")
     inv.edit_cash(50)
     success = gar.record_repair("Charger", 0, 0, 100)
     assert success is False
@@ -154,6 +158,7 @@ def test_garage_insufficient_resources(setup_system):
 # 18. Garage Repair History Integration
 def test_repair_history_log(setup_system):
     _, inv, _, _, _, gar, _ = setup_system
+    inv.add_car("SuperCar")
     inv.edit_tools(10)
     inv.edit_parts(10)
     inv.edit_cash(1000)
