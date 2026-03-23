@@ -4,7 +4,7 @@ class Registration:
 
     def register(self, name, role, skill):
         if name and name not in self.members:
-            self.members[name] = {"role": role, "skill": skill}
+            self.members[name] = {"role": role, "skill": max(0, skill)}
             return True
         return False
 
@@ -22,7 +22,7 @@ class Registration:
 
     def set_skill(self, name, skill):
         if name in self.members:
-            self.members[name]["skill"] = skill
+            self.members[name]["skill"] = max(0, skill)
             return True
         return False
 
