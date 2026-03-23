@@ -77,9 +77,13 @@ class Game:
     def _move_and_resolve(self, player, steps):
         """Move `player` by `steps` and trigger whatever tile they land on."""
         player.move(steps)
+        self._resolve_tile(player)
+
+    def _resolve_tile(self, player):
+        """Handle the actions for the tile the player is currently standing on."""
         position = player.position
         tile = self.board.get_tile_type(position)
-        print(f"  {player.name} moved to position {position}  [{tile}]")
+        print(f"  {player.name} is on position {position}  [{tile}]")
 
         if tile == "go_to_jail":
             player.go_to_jail()
@@ -376,8 +380,8 @@ class Game:
             "jail": self._card_action_jail,
             "jail_free": self._card_action_jail_free,
             "move_to": self._card_action_move_to,
-            "birthday": self._card_action_transfer_all,
-            "collect_from_all": self._card_action_transfer_all,
+            "birthday": self._card_action_collect_from_all,
+            "collect_from_all": self._card_action_collect_from_all,
         }
 
         if action in handlers:
@@ -405,17 +409,24 @@ class Game:
         if value < old_pos:
             player.add_money(GO_SALARY)
             print(f"  {player.name} passed Go and collected ${GO_SALARY}.")
-        tile = self.board.get_tile_type(value)
-        if tile == "property":
-            prop = self.board.get_property_at(value)
-            if prop:
-                self._handle_property_tile(player, prop)
+        
+        self._resolve_tile(player)
 
     def _card_action_transfer_all(self, player, value):
         for other in self.players:
             if other != player and not other.is_eliminated:
                 other.deduct_money(value)
                 player.add_money(value)
+
+    def _card_action_collect_from_all(self, player, value):
+        """Conditional version of transfer_all: only deduct if they have enough."""
+        total_collected = 0
+        for other in self.players:
+            if other != player and not other.is_eliminated:
+                if other.balance >= value:
+                    other.deduct_money(value)
+                    total_collected += value
+        player.add_money(total_collected)
 
 
     def _check_bankruptcy(self, player):
