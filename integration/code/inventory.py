@@ -5,9 +5,9 @@ class Inventory:
         self.parts_count = 0
         self.tools_count = 0
 
-    def edit_cash(self, val): self.cash = val
-    def edit_parts(self, val): self.parts_count = val
-    def edit_tools(self, val): self.tools_count = val
+    def edit_cash(self, val): self.cash = max(0, val)
+    def edit_parts(self, val): self.parts_count = max(0, val)
+    def edit_tools(self, val): self.tools_count = max(0, val)
     def add_car(self, name): self.cars.append(name)
 
     def get_status(self):
