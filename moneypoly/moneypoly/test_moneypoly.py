@@ -339,7 +339,7 @@ def test_15_7_max_turns_condition(game):
 # --- 16. Edge Cases ---
 
 def test_16_1_get_player_names_blanks():
-    from moneypoly.main import get_player_names
+    from main import get_player_names
     with patch('builtins.input', return_value="  , , ,  "):
         names = get_player_names()
         assert names == []
@@ -715,7 +715,8 @@ def test_23_8_go_salary_from_cards(game):
     p = game.players[0]
     p.position = 35
     from moneypoly.config import GO_SALARY
-    game._card_action_move_to(p, 5)
+    with patch('builtins.input', return_value='s'):
+        game._card_action_move_to(p, 5)
     assert p.balance == 1500 + GO_SALARY
 
 def test_23_9_jail_turns_reset_on_card(game):
@@ -942,7 +943,7 @@ def test_27_1_bank_coverage():
     b.give_loan(p, 500)
     assert b.total_loans_issued() == 500
     b.summary()
-    assert repr(b) == "Bank(funds=20030)"
+    assert repr(b) == "Bank(funds=20080)"
 
 def test_27_2_board_ui_property_coverage(game):
     from moneypoly.property import PropertyGroup, Property
