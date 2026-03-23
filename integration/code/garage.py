@@ -4,7 +4,8 @@ class Garage:
         self.history = []
 
     def record_repair(self, car_name, tools, parts, cash):
-        if self.inventory.tools_count >= tools and \
+        if car_name in self.inventory.cars and \
+           self.inventory.tools_count >= tools and \
            self.inventory.parts_count >= parts and \
            self.inventory.cash >= cash:
             
