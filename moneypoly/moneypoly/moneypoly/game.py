@@ -202,8 +202,8 @@ class Game:
         in exchange for `cash_amount` from `buyer`.
         Returns True on success.
         """
-        if prop.owner != seller:
-            print(f"  Trade failed: {seller.name} does not own {prop.name}.")
+        if prop is None or prop.owner != seller:
+            print(f"  Trade failed: invalid property or owner mismatch.")
             return False
         if buyer.balance < cash_amount:
             print(f"  Trade failed: {buyer.name} cannot afford ${cash_amount}.")
