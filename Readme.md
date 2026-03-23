@@ -46,3 +46,14 @@ pip install pytest
 
 pytest test_blackbox.py
 ```
+
+## Gdrive Link
+```
+https://drive.google.com/file/d/12hfvM1oD-T1v_0YvGBuMSRG_YA6ScuGz/view?usp=sharing
+```
+
+## Github Link
+```
+https://github.com/Silencer0/dass_as2
+```
+
