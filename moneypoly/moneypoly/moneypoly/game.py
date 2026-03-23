@@ -205,8 +205,8 @@ class Game:
         if prop is None or prop.owner != seller:
             print(f"  Trade failed: invalid property or owner mismatch.")
             return False
-        if buyer.balance < cash_amount:
-            print(f"  Trade failed: {buyer.name} cannot afford ${cash_amount}.")
+        if buyer.balance < cash_amount or cash_amount < 0:
+            print(f"  Trade failed: invalid cash amount (${cash_amount}).")
             return False
 
         buyer.deduct_money(cash_amount)
