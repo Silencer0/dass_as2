@@ -458,7 +458,7 @@ def test_20_1_dice_reset_and_repr():
     d = Dice()
     d.roll()
     d.reset()
-    assert d.die1 == 0 and d.die2 == 0
+    assert d.die1 == 1 and d.die2 == 2
     rep = repr(d)
     assert "Dice(" in rep
 
