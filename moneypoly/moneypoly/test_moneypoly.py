@@ -54,7 +54,9 @@ def test_2_1_voluntary_fine_payment(game):
     player.go_to_jail()
     initial_balance = player.balance
     
-    with patch('moneypoly.ui.confirm', return_value=True), patch('builtins.input', return_value='s'):
+    with patch('moneypoly.ui.confirm', return_value=True), \
+         patch('builtins.input', return_value='s'), \
+         patch.object(game.dice, 'roll', return_value=1):
         game._handle_jail_turn(player)
         assert player.in_jail is False
         assert player.jail_turns == 0

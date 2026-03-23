@@ -413,7 +413,7 @@ class Game:
 
     def _card_action_transfer_all(self, player, value):
         for other in self.players:
-            if other != player and other.balance >= value:
+            if other != player and not other.is_eliminated:
                 other.deduct_money(value)
                 player.add_money(value)
 

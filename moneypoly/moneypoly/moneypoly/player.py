@@ -59,8 +59,8 @@ class Player:
         self.balance -= amount
 
     def is_bankrupt(self):
-        """Return True if this player has no money remaining."""
-        return self.balance <= 0
+        """Return True if this player has negative funds."""
+        return self.balance < 0
 
     def net_worth(self):
         """Calculate and return this player's total net worth."""
