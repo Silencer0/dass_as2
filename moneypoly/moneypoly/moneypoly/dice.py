@@ -12,14 +12,14 @@ class Dice:
 
     def reset(self):
         """Reset dice face values and the doubles streak counter."""
-        self.die1 = 0
-        self.die2 = 0
+        self.die1 = 1
+        self.die2 = 2
         self.doubles_streak = 0
 
     def roll(self):
         """Roll both dice and return their combined total."""
-        self.die1 = random.randint(1, 5)
-        self.die2 = random.randint(1, 5)
+        self.die1 = random.randint(1, 6)
+        self.die2 = random.randint(1, 6)
         if self.is_doubles():
             self.doubles_streak += 1
         else:
